@@ -1,0 +1,50 @@
+.fenguanleaderTree .ant-tree .ant-tree-icon__docu{
+    display: none;
+}
+
+.fenguanleaderTree .ant-tree .anticon{
+    color: #5D99CA;
+}
+
+.fenguanleaderTree .ant-tree.ant-tree-show-line .ant-tree-child-tree li:not(:last-child)::before{
+    margin-left: 10px;
+}
+
+.fenguanleaderTree .ant-tree.ant-tree-show-line li span.ant-tree-switcher-noop{
+    margin-left: 10px;
+}
+.fenguanleaderTree .ant-tree li .ant-tree-node-content-wrapper.ant-tree-node-selected{
+    background-color:#2892E9;
+    color: #FCFDFF;
+}
+
+.yzgfenguanleadertableth .ant-table-thead tr th{
+    background-color: #F2F2F2;
+    font-family: PingFangSC-Medium;
+    font-size: 14px;
+    color: rgba(0,0,0,0.85);
+    line-height: 22px;
+    text-align: center;
+    font-weight: 700;
+    padding: 6px 0px!important;
+}
+
+.yzgfenguanleadertableth .ant-table-tbody > tr > td{
+    padding: 6px 10px!important;
+}
+
+.yzgfenguanleadertableth .ant-pagination-item-active{
+    border-color:#2791E7;
+    background-color: #2791E7;
+}
+.yzgfenguanleadertableth .ant-pagination-item-active a{
+    color: #D8FEFE;
+}
+
+.FenguanLeaderhuakuai{
+    background-color: #CCCCCC;
+}
+
+.FenguanLeaderhuakuai:hover{
+    background-color: #bbb;
+}
