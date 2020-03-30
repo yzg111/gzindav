@@ -4,9 +4,9 @@
 
 ÕËºÅ£ºadmin
 
-ÃÜÂë£ºRofine@123
+ÃÜÂë£ºDsa#321
 
 
 
 
-http://203.195.194.222:8087/#/CIManage/classManage
+http://111.75.255.42:9001/login.html
