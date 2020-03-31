@@ -115,6 +115,12 @@ export function getNowTime() {
 
 }
 
+export function getNowYear() {
+    var date = new Date();
+    return date.getFullYear();
+
+}
+
 
 let sz = [
     {

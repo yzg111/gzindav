@@ -48,3 +48,20 @@
 .FenguanLeaderhuakuai:hover{
     background-color: #bbb;
 }
+
+.leadrtwomodaldept .ant-modal-header {
+    background: linear-gradient(#0E4691, #0E4691);
+    border-bottom: 1px solid #e8e8e8;
+    border-radius: 4px 4px 0 0;
+}
+
+.leadrtwomodaldeptfd .ant-modal-header {
+    background: linear-gradient(#0E4691, #0E4691);
+    border-bottom: 1px solid #e8e8e8;
+    border-radius: 4px 4px 0 0;
+    top: 0;
+}
+
+.leadrtwomodaldeptfd.ant-modal{
+    top: 0;
+}
