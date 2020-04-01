@@ -302,6 +302,43 @@ export function deepCopy(obj) {
     return result;
 }
 
+//深度复制并改变里面某些值
+export function deepCopyChange(obj) {
+    let result = Array.isArray(obj) ? [] : {};
+    for (let key in obj) {
+        // console.log("复制key",key)
+        if (obj.hasOwnProperty(key)) {
+            if (typeof obj[key] === 'object') {
+                console.log("复制key",key)
+                if(key=="children"){
+                    console.log("是否是子节点")
+                    if (obj[key].length>0){
+                        result[key] = deepCopyChange(obj[key]);   // 递归复制
+                    }
+                }else if(key=="dataIndex"){
+                    if (obj[key]){
+                        result[key] = deepCopyChange(obj[key]);   // 递归复制
+                    }
+                }else {
+                    result[key] = deepCopyChange(obj[key]);   // 递归复制
+                }
+            } else {
+                if(key=="children"){
+                    console.log("是否是子节点")
+                    if (obj[key].length==0){
+                        result[key]="";
+                    }else {
+                        result[key] = obj[key];
+                    }
+                }else {
+                    result[key] = obj[key];
+                }
+            }
+        }
+    }
+    return result;
+}
+
 //从小到大排序
 export const arrMapKeySort=(arr,key)=>{
     arr.sort(function(a,b){

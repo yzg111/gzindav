@@ -129,7 +129,7 @@
   },
   "proxy": {
     "/cms/*": {
-      "target": "http://111.75.255.42:9001",
+      "target": "http://39.108.125.84:9028",
       "changeOrigin": true,
       "pathRewrite": {
         "^/cms": "/cms"
