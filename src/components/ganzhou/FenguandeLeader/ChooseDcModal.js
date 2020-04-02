@@ -1,10 +1,8 @@
 import React, {Component} from "react"
 import {
-    Layout, LocaleProvider, Card, Row, Col, Radio,
-    Input, Pagination, Button, notification, Tabs, Select, Icon, Table, Tree, Popover,
+     Radio, Button, Icon,
     Modal
 } from 'antd';
-import {getNowYear} from "../../../comfunction/ComFun";
 import 放大 from "../../../Images/ganzhou/arrowsalt.svg"
 import 缩小 from "../../../Images/ganzhou/shrink.svg"
 import "./FenGuandeLeader.css"
