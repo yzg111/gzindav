@@ -32,20 +32,41 @@ export default class FenguandeNetworkRight extends Component {
             dcisdisable: true,
             fbisdisable: true,
             tablehead: [],
-            radiovalue:"",
-            loading:true,
-            pageSize:15
+            radiovalue: "",
+            loading: true,
+            pageSize: 15,
+            yeardata: []
         }
     }
 
     componentWillMount = () => {
+        //获取年份数据
+        getCibyAttributes("年份", {}).then(data => {
+            console.log("年份数据", data)
+            let content = data.data.content;
+            let dt = [];
+            if (content) {
+                let results = content.results;
+                if (results) {
+                    results.map(item => {
+                        let tmp = item.dataFieldMap;
+                        tmp.id = item["id"]
+                        tmp['ciClassID'] = item['ciClassID']
+                        dt.push(tmp);
+                    })
+                    this.setState({
+                        yeardata: dt
+                    })
+                }
+            }
+        })
         //默认加载当前年份的数据
         console.log("当前年份", getNowYear() + "年")
         this.getdata(getNowYear() + "年");
 
     }
 
-    getdata=(year)=>{
+    getdata = (year) => {
         getCibyAttributes("成绩表", {"年份": year}).then(data => {
             console.log("获取到的数据", data)
             let content = data.data.content;
@@ -54,8 +75,8 @@ export default class FenguandeNetworkRight extends Component {
                 let results = content.results;
                 if (results) {
                     results.map(item => {
-                        let tmp=item.dataFieldMap;
-                        tmp.id=item["id"]
+                        let tmp = item.dataFieldMap;
+                        tmp.id = item["id"]
                         tmp['ciClassID'] = item['ciClassID']
                         dt.push(tmp);
                     })
@@ -74,12 +95,12 @@ export default class FenguandeNetworkRight extends Component {
                 console.log("替换过的数据", tmp)
                 this.setState({
                     tablehead: tmp,
-                    loading:false
+                    loading: false
                 })
-            }else {
+            } else {
                 this.setState({
                     tablehead: [],
-                    loading:false
+                    loading: false
                 })
             }
         })
@@ -109,12 +130,12 @@ export default class FenguandeNetworkRight extends Component {
     onShowSizeChange = (current, pageSize) => {
         console.log(pageSize)
         this.setState({
-            pageSize:pageSize
+            pageSize: pageSize
         })
     }
 
     getTablePagination = (data, updown) => {
-        const {pageSize}=this.state;
+        const {pageSize} = this.state;
         return {
             pageSize: pageSize,
             total: data.length,
@@ -122,9 +143,9 @@ export default class FenguandeNetworkRight extends Component {
             showSizeChanger: true,
             onShowSizeChange: this.onShowSizeChange,
             showQuickJumper: true,
-            pageSizeOptions: [ "10", "15", "20", "30", "40"],
+            pageSizeOptions: ["10", "15", "20", "30", "40"],
             hideOnSinglePage: false,
-            selectedRows:[]
+            selectedRows: []
         }
     }
 
@@ -135,9 +156,9 @@ export default class FenguandeNetworkRight extends Component {
     }
 
     getYearOption = () => {
-        const {tabledata} = this.state;
+        const {yeardata} = this.state;
         let ary = [];
-        tabledata.map(item => {
+        yeardata.map(item => {
             if (item.年份) {
                 if (!itemisexist(ary, item.年份)) {
                     ary.push(item.年份)
@@ -167,7 +188,7 @@ export default class FenguandeNetworkRight extends Component {
         console.log(value)
         this.setState({
             yearvalue: value,
-            loading:true
+            loading: true
         })
         //加载相应年份的数据和表头
         this.getdata(value)
@@ -245,25 +266,25 @@ export default class FenguandeNetworkRight extends Component {
     selectDC = () => {
         this.setState({
             visible: true,
-            radiovalue:""
+            radiovalue: ""
         })
     }
 
     onChange = (e) => {
         console.log("radio改变", e.target.value)
         this.setState({
-            radiovalue:e.target.value
+            radiovalue: e.target.value
         })
     }
 
     onCreate = () => {
-        const {selectedRows,radiovalue}=this.state;
+        const {selectedRows, radiovalue} = this.state;
         //保存数据到数据库
         console.log("保存数据")
-        updateCiByIdList(selectedRows,{"等次":radiovalue}).then(data=>{
-            console.log("更新数据",data)
+        updateCiByIdList(selectedRows, {"等次": radiovalue}).then(data => {
+            console.log("更新数据", data)
             //刷新数据
-            this.getdata(getNowYear()+"年")
+            this.getdata(getNowYear() + "年")
         })
         this.setState({
             visible: false
@@ -273,22 +294,22 @@ export default class FenguandeNetworkRight extends Component {
 
     render() {
         const {
-            upordown, visible, visibledone,   yearvalue, tabledata, dcisdisable, tablehead,
-            groupsvalue,deptsvalue,statesvalue,loading
+            upordown, visible, visibledone, yearvalue, tabledata, dcisdisable, tablehead,
+            groupsvalue, deptsvalue, statesvalue, loading
         } = this.state;
 
-        let data=deepCopy(tabledata);
-        if(yearvalue){
-            data=data.filter(i=>i.年份==yearvalue)
+        let data = deepCopy(tabledata);
+        if (yearvalue) {
+            data = data.filter(i => i.年份 == yearvalue)
         }
-        if (groupsvalue){
-            data=data.filter(i=>i.分组==groupsvalue)
+        if (groupsvalue) {
+            data = data.filter(i => i.分组 == groupsvalue)
         }
-        if (deptsvalue){
-            data=data.filter(i=>i.部门==deptsvalue)
+        if (deptsvalue) {
+            data = data.filter(i => i.部门 == deptsvalue)
         }
-        if (statesvalue){
-            data=data.filter(i=>i.等次==statesvalue)
+        if (statesvalue) {
+            data = data.filter(i => i.等次 == statesvalue)
         }
 
         const columns = [
@@ -323,7 +344,8 @@ export default class FenguandeNetworkRight extends Component {
                 title: '排名',
                 dataIndex: '排名',
                 width: "80px",
-                align: "center"
+                align: "center",
+                sorter: (a, b) => a.排名 - b.排名,
             }, {
                 title: '等次',
                 dataIndex: '等次',
@@ -347,18 +369,18 @@ export default class FenguandeNetworkRight extends Component {
                     if (tmp.length > 0) {
                         this.setState({
                             dcisdisable: true,
-                            selectedRows:selectedRows
+                            selectedRows: selectedRows
                         })
                     } else {
                         this.setState({
                             dcisdisable: false,
-                            selectedRows:selectedRows
+                            selectedRows: selectedRows
                         })
                     }
                 } else {
                     this.setState({
                         dcisdisable: true,
-                        selectedRows:selectedRows
+                        selectedRows: selectedRows
                     })
                 }
 
@@ -401,10 +423,10 @@ export default class FenguandeNetworkRight extends Component {
                                         <Select placeholder={"全部"} style={{width: "90%"}}
                                                 onChange={this.YearChange} value={yearvalue}>
                                             {/*<Option value="">全部</Option>*/}
-                                            {/*{this.getYearOption()}*/}
-                                            <Option value="2019年">2019年</Option>
-                                            <Option value="2020年">2020年</Option>
-                                            <Option value="2021年">2021年</Option>
+                                            {this.getYearOption()}
+                                            {/*<Option value="2019年">2019年</Option>*/}
+                                            {/*<Option value="2020年">2020年</Option>*/}
+                                            {/*<Option value="2021年">2021年</Option>*/}
                                         </Select>
                                     </Col>
                                 </Col>
